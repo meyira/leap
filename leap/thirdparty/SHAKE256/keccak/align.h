@@ -1,0 +1,39 @@
+/*
+Implementation by the Keccak Team, namely, Guido Bertoni, Joan Daemen,
+Michaël Peeters, Gilles Van Assche and Ronny Van Keer,
+hereby denoted as "the implementer".
+
+For more information, feedback or questions, please refer to our website:
+https://keccak.team/
+
+To the extent possible under law, the implementer has waived all copyright
+and related or neighboring rights to the source code in this file.
+http://creativecommons.org/publicdomain/zero/1.0/
+*/
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+#ifndef _align_h_
+#define _align_h_
+
+/* on Mac OS-X and possibly others, ALIGN(x) is defined in param.h, and -Werror
+ * chokes on the redef. */
+#ifdef ATTR_ALIGN
+#undef ATTR_ALIGN
+#endif
+
+#if defined(__GNUC__)
+#define ATTR_ALIGN(x) __attribute__((aligned(x)))
+#elif defined(_MSC_VER)
+#define ATTR_ALIGN(x) __declspec(align(x))
+#elif defined(__ARMCC_VERSION)
+#define ATTR_ALIGN(x) __align(x)
+#else
+#define ATTR_ALIGN(x)
+#endif
+
+#endif
+#if defined(__cplusplus)
+}
+#endif
