@@ -4,7 +4,7 @@ This repository contains the prototype implementation of the OPRF Leap,
 published at Eurocrypt 2025. The code is provided as-is for research purposes,
 and is not optimized or secure for production purposes. 
 
-This is the code for the full version with more tables than in the conference
+This is the code for the [full version](https://eprint.iacr.org/2025/333.pdf) with more tables than in the conference
 version. 
 
 ## Build Instructions
