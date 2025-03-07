@@ -49,8 +49,7 @@ RUN if [ ! -d /usr/local/include/KyberOT/ ]; then mkdir -p /usr/local/include/Ky
 RUN cp thirdparty/KyberOT/KyberOT.h /usr/local/include/KyberOT/&& cp thirdparty/KyberOT/params.h /usr/local/include/KyberOT/
  
 # # --------------------- clone, build leap ----------------------
-WORKDIR /pwd
-RUN mkdir build 
+ 
 WORKDIR /pwd/build
+#RUN mkdir /pwd/build && cmake .. && make
 SHELL ["/bin/bash", "-c"]
-RUN cmake .. && make
