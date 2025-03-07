@@ -16,8 +16,8 @@ All binaries will be in `build/leap/tests` once built.
 ## Requirements
 
 The libOTe is fantastic but can be a bit tricky to build. For convenience, use the 
-supplied Docker image using `docker build -t leap . && docker run -v $PWD:/pwd
---rm -it leap`. This will take a while as it pulls a specific version of the
+supplied Docker image using ```docker build -t leap . && docker run -v $PWD:/pwd
+--rm -it leap```. This will take a while as it pulls a specific version of the
 libOTe and builds it. If you have a working installation of the libOTe on your
 system, you can just run the code natively. 
 
@@ -26,10 +26,10 @@ The Dockerfile will take you to the /pwd where the repo is mounted. Build the li
 
 ### libOTe
 
-Installed with `python3 build.py --boost -DENABLE_SIMPLESTOT_ASM=ON
+Installed with ```python3 build.py --boost -DENABLE_SIMPLESTOT_ASM=ON
 -DENABLE_MR_KYBER=ON -DENABLE_IKNP=ON -DENABLE_SILENTOT=ON
 -DENABLE_SOFTSPOKEN_OT=ON -DENABLE_PIC=ON -D FETCH_AUTO=true --relic --install
---sudo`
+--sudo```
 Used release 2.1.0 
 
 ### AVX2 instructions
