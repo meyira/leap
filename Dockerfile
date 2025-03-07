@@ -41,7 +41,6 @@ WORKDIR /home/libOTe
 
 RUN python3 build.py --boost -DENABLE_SIMPLESTOT_ASM=ON -DENABLE_MR_KYBER=ON \ 
 -DENABLE_IKNP=ON -DENABLE_SOFTSPOKEN_OT=ON -DENABLE_SILENTOT=ON -DENABLE_PIC=ON -DLIBOTE_STD_VER=20 --relic  
-# # RUN python3 build.py --all --boost --sodium
 RUN python3 build.py --install
 # create KyberOT directory if it does not exist
 RUN if [ ! -d /usr/local/include/KyberOT/ ]; then mkdir -p /usr/local/include/KyberOT/; fi
@@ -50,6 +49,5 @@ RUN cp thirdparty/KyberOT/KyberOT.h /usr/local/include/KyberOT/&& cp thirdparty/
  
 # # --------------------- clone, build leap ----------------------
  
-WORKDIR /pwd/build
-#RUN mkdir /pwd/build && cmake .. && make
+WORKDIR /pwd
 SHELL ["/bin/bash", "-c"]
