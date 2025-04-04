@@ -19,10 +19,9 @@ RUN mkdir build && cd build && cmake .. && make -j && make install
 WORKDIR /home/
 RUN git clone --recurse-submodules https://github.com/ladnir/cryptoTools/ 
 WORKDIR /home/cryptoTools
-#RUN git checkout b2cdd30
+RUN git checkout 3dfa3a3
 # build according to instructions on github
 RUN python3 build.py --setup --boost --relic
-# RUN python3 build.py -D ENABLE_RELIC=ON
 RUN python3 build.py --install
  
 # # # --------------------- clone, build coproto ----------------------
@@ -30,6 +29,7 @@ WORKDIR /home/
 RUN git clone https://github.com/Visa-Research/coproto
  
 WORKDIR /home/coproto
+RUN git checkout 1d88e90
 RUN python3 build.py
 RUN python3 build.py --install
 # # --------------------- clone, build libOTe ----------------------
@@ -37,7 +37,7 @@ RUN python3 build.py --install
 WORKDIR /home/
 RUN git clone https://github.com/osu-crypto/libOTe  
 WORKDIR /home/libOTe
-#RUN git checkout v2.2.0 
+RUN git checkout e05696d 
 
 RUN python3 build.py --boost -DENABLE_SIMPLESTOT_ASM=ON -DENABLE_MR_KYBER=ON \ 
 -DENABLE_IKNP=ON -DENABLE_SOFTSPOKEN_OT=ON -DENABLE_SILENTOT=ON -DLIBOTE_STD_VER=20 --relic  
@@ -51,3 +51,4 @@ RUN cp thirdparty/KyberOT/KyberOT.h /usr/local/include/KyberOT/&& cp thirdparty/
  
 WORKDIR /pwd
 SHELL ["/bin/bash", "-c"]
+
