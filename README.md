@@ -1,39 +1,70 @@
 # LEAP: A Fast, Lattice-based OPRF With Application to Private Set Intersection
 
-This repository contains the prototype implementation of the OPRF Leap,
+This repository contains the prototype implementation of the OPRF **Leap**,
 published at Eurocrypt 2025. The code is provided as-is for research purposes,
 and is not optimized or secure for production purposes. 
 
-This is the code for the [full version](https://eprint.iacr.org/2025/333.pdf) with more tables than in the conference
+This implementation corresponds to the [full version](https://eprint.iacr.org/2025/333.pdf) of the paper, which includes additional tables not present in the conference
 version. 
 
 ## Build Instructions
 
-`mkdir build && cd build && cmake .. && make -j` 
+```sh
+mkdir build && cd build && cmake .. && make -j
+```
 
-All binaries will be in `build/leap/tests` once built. 
+Once built, all binaries will be located in `build/leap/tests`. 
 
 ## Requirements
 
-The libOTe is fantastic but can be a bit tricky to build. For convenience, use the 
-supplied Docker image using ```docker build -t leap . && docker run -v $PWD:/pwd
---rm -it leap```. This will take a while as it pulls a specific version of the
-libOTe and builds it. If you have a working installation of the libOTe on your
-system, you can just run the code natively. 
+### libOTe Installation
 
-The Dockerfile will take you to the /pwd where the repo is mounted. Build the library with 
-`mkdir build && cd build && cmake .. && make -j` 
+**libOTe** is a fantastic library but can be a bit tricky to build. We recommend using
+the provided Docker image: 
+```sh
+docker build -t leap . && docker run -v $PWD:/pwd --rm -it leap
+```
+Building the image takes around fie minutes as it pulls a specific version of the
+libOTe and its dependencies. If you have a working installation of the libOTe on your
+system, you can just run the code natively. The benchmarks use libOTe v2.1.0,
+the Docker container uses 2.2.0 for compatibility reasons. 
 
-### libOTe
+### Building Inside Docker
+
+The Dockerfile mounts the repository to `/pwd`. To build the library inside the
+container, run:  
+```sh 
+mkdir build && cd build && cmake .. && make -j
+``` 
+
+### Manual installation of the libOTe
 
 Installed with ```python3 build.py --boost -DENABLE_SIMPLESTOT_ASM=ON
 -DENABLE_MR_KYBER=ON -DENABLE_IKNP=ON -DENABLE_SILENTOT=ON
 -DENABLE_SOFTSPOKEN_OT=ON -DENABLE_PIC=ON -D FETCH_AUTO=true --relic --install
 --sudo```
-Used release 2.1.0 
+The benchmarks use libOTe v2.1.0. 
 
-### AVX2 instructions
-Necessary. 
+
+### Benchmarking and Dockerfile Differences
+Our original benchmarks were conducted on a machine with the following specifications: 
+
+- **OS:** Ubuntu 22.04.1
+- **Kernel:** 6.2.0-37-generic
+- **CPU:** AMD Ryzen 9 7900X (12-Core, fixed at 4.7 GHz, benchmarks run in single process)
+- **RAM:** 128 GiB
+- **Dependency:** libOTe v2.1.0 (natively installed)
+
+
+For the Docker image:
+
+- We use **Ubuntu 24.04** as it provides better stability for **libOTe** and C++ dependencies.
+- The Dockerfile installs **libOTe v2.2.0**, which offers smoother dependency management.
+- Despite the version difference, the functionality of the used features remains unchanged.
+
+### AVX2 requirement
+
+AVX2 instructions **must** be enabled.
 
 ## Code Description for Tables in Data
 
@@ -46,7 +77,7 @@ Generated using the files in `leap/tests/baseOT`. The number of iterations can
 be adjusted in `leap/tests/baseOT/iter.h`. The binaries will be in
 `tests` once built. 
 
-This table is *Table 2* in the conference version.
+**Note**: This table is *Table 2* in the conference version.
 
 ### Table 4: OPRF Communication and Computation Complexity
 Generated using `leap/tests/oprf-ref.cpp`. The output includes the PRF output to verify correctness and hashing the OPRF output to remove the algebraic structure.
