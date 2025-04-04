@@ -39,10 +39,11 @@ mkdir build && cd build && cmake .. && make -j
 
 ### Manual installation of the libOTe
 
-Installed with ```python3 build.py --boost -DENABLE_SIMPLESTOT_ASM=ON
--DENABLE_MR_KYBER=ON -DENABLE_IKNP=ON -DENABLE_SILENTOT=ON
--DENABLE_SOFTSPOKEN_OT=ON -DENABLE_PIC=ON -D FETCH_AUTO=true --relic --install
---sudo```
+Installed with 
+```sh 
+python3 build.py --boost -DENABLE_SIMPLESTOT_ASM=ON -DENABLE_MR_KYBER=ON \ 
+-DENABLE_IKNP=ON -DENABLE_SOFTSPOKEN_OT=ON -DENABLE_SILENTOT=ON -DLIBOTE_STD_VER=20 --relic  
+```
 The benchmarks use libOTe v2.1.0. 
 
 
@@ -55,11 +56,10 @@ Our original benchmarks were conducted on a machine with the following specifica
 - **RAM:** 128 GiB
 - **Dependency:** libOTe v2.1.0 (natively installed)
 
-
 For the Docker image:
 
 - We use **Ubuntu 24.04** as it provides better stability for **libOTe** and C++ dependencies.
-- The Dockerfile installs **libOTe v2.2.0**, which offers smoother dependency management.
+- The Dockerfile installs the commit ID e05696d, which offers smoother dependency management.
 - Despite the version difference, the functionality of the used features remains unchanged.
 
 ### AVX2 requirement
