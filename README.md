@@ -73,9 +73,19 @@ The exact calls made to get the data for Table 2 is in `estimate-spring.py`.
 This table is *not* included in the conference version.
 
 ### Table 3: Preprocessing Complexity 
-Generated using the files in `leap/tests/baseOT`. The number of iterations can
-be adjusted in `leap/tests/baseOT/iter.h`. The binaries will be in
-`tests` once built. 
+The source files can be found in `leap/tests/baseOT`. The number of iterations can
+be adjusted in `leap/tests/baseOT/iter.h`, the table in the paper benchmarks `1` and `1<<13` interations. 
+The following binaries in
+`opal/tests` are used to generate the benchmarks:  
+
+- `SimplestOtPreprocessing` benchmarks the iterations for SimplestOT with the
+  IKNP OT extension (S.OT+IKNP line in the table). 
+- `KyberOtPreprocessing` benchmarks the iterations for KyberOT with the
+  IKNP OT extension (K.OT+IKNP line in the table). 
+- `SilentSimplestOtPreprocessing` benchmarks the iterations for SimplestOT with the
+  SilentOT extension (K.OT+Silent line in the table). 
+- `SilentKyberOtPreprocessing` benchmarks the iterations for KyberOT with the
+  SilentOT extension (K.OT+Silent line in the table). 
 
 **Note**: This table is *Table 2* in the conference version.
 
