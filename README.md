@@ -76,7 +76,7 @@ This table is *not* included in the conference version.
 The source files can be found in `leap/tests/baseOT`. The number of iterations can
 be adjusted in `leap/tests/baseOT/iter.h`, the table in the paper benchmarks `1` and `1<<13` interations. 
 The following binaries in
-`opal/tests` are used to generate the benchmarks:  
+`leap/tests` are used to generate the benchmarks:  
 
 - `SimplestOtPreprocessing` benchmarks the iterations for SimplestOT with the
   IKNP OT extension (S.OT+IKNP line in the table). 
@@ -90,7 +90,7 @@ The following binaries in
 **Note**: This table is *Table 2* in the conference version.
 
 ### Table 4: OPRF Communication and Computation Complexity
-Generated using `leap/tests/oprf-ref.cpp`. The output includes the PRF output to verify correctness and hashing the OPRF output to remove the algebraic structure.
+The binary `build/leap/tests/oprf-ref.cpp` is generated using `leap/tests/oprf-ref.cpp`. The output includes the PRF output to verify correctness and hashing the OPRF output to remove the algebraic structure.
 IP and port are hardcoded in the file for a simpler user interface. 
 
 This table is *Table 3* in the conference version.
@@ -99,9 +99,9 @@ This table is *Table 3* in the conference version.
 Generated using `leap/tests/test-psi.cpp`. The concrete calls are (in two
 seperate terminals, from the build folder): 
 
-- `leap/tests/test-psi 0 127.0.0.1 12345 0` and  `leap/tests/test-psi 1 127.0.0.1 12345 0`
-- `leap/tests/test-psi 0 127.0.0.1 12345 5` and  `leap/tests/test-psi 1 127.0.0.1 12345 5`
-- `leap/tests/test-psi 0 127.0.0.1 12345 10` and  `leap/tests/test-psi 1 127.0.0.1 12345 10`
+- `leap/tests/test-psi 0 127.0.0.1 12345 20` and  `leap/tests/test-psi 1 127.0.0.1 12345 1`
+- `leap/tests/test-psi 0 127.0.0.1 12345 20` and  `leap/tests/test-psi 1 127.0.0.1 12345 10`
+- `leap/tests/test-psi 0 127.0.0.1 12345 24` and  `leap/tests/test-psi 1 127.0.0.1 12345 15`
 
 The default configuration is with KyberOT (ML-KEM) and IKNP OT. To switch, edit
 the file `leap/psi/params.h`, where macros switch IKNP and KyberOT on via
@@ -120,9 +120,9 @@ implementations:
 
 The calls are: 
 
-- `leap/tests/test-psi 0 127.0.0.1 12345 24` and  `leap/tests/test-psi 1 127.0.0.1 12345 15`
-- `leap/tests/test-psi 0 127.0.0.1 12345 24` and  `leap/tests/test-psi 1 127.0.0.1 12345 15`
-- `leap/tests/test-psi 0 127.0.0.1 12345 24` and  `leap/tests/test-psi 1 127.0.0.1 12345 15`
+- `leap/tests/test-psi 0 127.0.0.1 12345 0` and  `leap/tests/test-psi 1 127.0.0.1 12345 0`
+- `leap/tests/test-psi 0 127.0.0.1 12345 5` and  `leap/tests/test-psi 1 127.0.0.1 12345 5`
+- `leap/tests/test-psi 0 127.0.0.1 12345 10` and  `leap/tests/test-psi 1 127.0.0.1 12345 10`
 
 ## Acknowledgements
 This project depends or references a number of other projects: 
