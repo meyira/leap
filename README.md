@@ -90,13 +90,24 @@ The following binaries in
 **Note**: This table is *Table 2* in the conference version.
 
 ### Table 4: OPRF Communication and Computation Complexity
-The binary `build/leap/tests/oprf-ref.cpp` is generated using `leap/tests/oprf-ref.cpp`. The output includes the PRF output to verify correctness and hashing the OPRF output to remove the algebraic structure.
+The binary `build/leap/tests/oprf-ref` is generated using `leap/tests/oprf-ref.cpp`. The output includes the PRF output to verify correctness and hashing the OPRF output to remove the algebraic structure.
 IP and port are hardcoded in the file for a simpler user interface. 
 
 This table is *Table 3* in the conference version.
 
 ### Table 5 and Table 6: PSI communication complexity
-Generated using `leap/tests/test-psi.cpp`. The concrete calls are (in two
+Generated using `leap/tests/test-psi.cpp`. 
+
+## Launching a second terminal in the same Docker 
+
+  1. Get the ID of the Docker container. when you start the first container, the
+     ID is the hostname (the hex after `root@`). You can also get it from
+running `docker ps` in the `CONTAINER ID` column under `IMAGE`.  
+  2. Launch the second container using `docker exec -it $ID bash`, where `$ID`
+     is the ID of the docker container obtained in step 1. 
+
+## Concrete Execution
+The concrete calls are (in two
 seperate terminals, from the build folder): 
 
 - `leap/tests/test-psi 0 127.0.0.1 12345 20` and  `leap/tests/test-psi 1 127.0.0.1 12345 1`
