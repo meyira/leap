@@ -144,3 +144,6 @@ This project depends or references a number of other projects:
 - [Cuckoo Filter implementation](https://github.com/efficient/cuckoofilter) for
   the PSI implementation
 - [SHAKE256 implementation](https://github.com/XKCP/XKCP)
+
+The repository is more useable thanks to the helpful comments of the anonymous reviewers of the
+artifact evaluation at Eurocrypt 2025. Thank you!
