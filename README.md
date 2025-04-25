@@ -100,9 +100,9 @@ Generated using `leap/tests/test-psi.cpp`.
 
 ## Launching a second terminal in the same Docker 
 
-  1. Get the ID of the Docker container. when you start the first container, the
-     ID is the hostname (the hex after `root@`). You can also get it from
-running `docker ps` in the `CONTAINER ID` column under `IMAGE`.  
+  1. Get the ID of the Docker container, either by running `docker ps` and
+     getting the `CONTAINER ID` of the `IMAGE` named `leap`, or from the
+hostname of the first container (the hex after `root@`). 
   2. Launch the second container using `docker exec -it $ID bash`, where `$ID`
      is the ID of the docker container obtained in step 1. 
 
