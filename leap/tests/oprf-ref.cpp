@@ -146,7 +146,7 @@ int main() {
     ole_choices = ole_corr ^ ole_choices;
     auto oleSpan =
         osuCrypto::span<uint8_t>(ole_choices.data(), ole_choices.sizeBytes());
-    std::vector<uint32_t> ole_enc(1152);
+    std::vector<uint16_t> ole_enc(1152);
 
 #ifdef LEAP_MICRO_BENCHMARKS
     auto cc_ole_wait = time.setTimePoint("ole-wait");
@@ -466,7 +466,7 @@ int main() {
   std::array<uint16_t, N> ole_in;
   s_prime.get_int_from_subsetsum(ole_in.data());
   std::array<uint16_t, N> blinder;
-  std::array<uint32_t, 1152> ole_enc;
+  std::array<uint16_t, 1152> ole_enc;
   BitVector ole_corr(1152);
 
   auto oleSpan =
