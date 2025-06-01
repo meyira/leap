@@ -235,10 +235,6 @@ int main() {
                    << (j - 64);
     }
     
-
-    /*
-     * End of functional code, only benchmarks
-     */
     auto rounding_end = client_socket.bytesSent();
     auto cc_bch = time.setTimePoint("bch");
     uint64_t prf_out = mask ^ BCH128to64(biased.data());
@@ -247,6 +243,10 @@ int main() {
     auto postEnd = time.setTimePoint("dig-end");
     printf("[OPRF] Result: %ld\n", prf_out);
     printf("[OPRF] Digest: %ld\n", digest);
+
+    /*
+     * End of functional code, only benchmarks
+     */
 
     auto overall =
         std::chrono::duration_cast<std::chrono::milliseconds>(postEnd - cc_bot)
@@ -629,9 +629,6 @@ int main() {
     enc_bits[2 * k + 1] ^= mask[1];
   }
 
-    /*
-     * End of functional code, only benchmarks
-     */
 #ifdef LEAP_MICRO_BENCHMARKS
   auto server_rounding_wait_two = time.setTimePoint("round-end");
 #endif
@@ -643,6 +640,10 @@ int main() {
   coproto::sync_wait(server_socket.send(bch_mask));
   auto server_fin = time.setTimePoint("end");
   auto bch_end = server_socket.bytesSent();
+
+  /*
+   * End of functional code, only benchmarks
+   */
 
   auto overall = std::chrono::duration_cast<std::chrono::milliseconds>(
                      server_fin - server_bot)
