@@ -21,9 +21,6 @@ uint64_t prf(const osuCrypto::block &input,
   result.get_int_from_subsetsum(out);
 
   // inverse NTT
-  // printf("corr=[");
-  // for(uint16_t j:out)
-  //  printf("%d, ", j);
 
   LEAP::intt(out);
   // printf("rr=[");
