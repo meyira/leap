@@ -146,7 +146,8 @@ int main() {
     ole_choices = ole_corr ^ ole_choices;
     auto oleSpan =
         osuCrypto::span<uint8_t>(ole_choices.data(), ole_choices.sizeBytes());
-    std::vector<uint16_t> ole_enc(1152);
+  // use uint32_t to avoid overflows
+    std::vector<uint32_t> ole_enc(1152);
 
 #ifdef LEAP_MICRO_BENCHMARKS
     auto cc_ole_wait = time.setTimePoint("ole-wait");
@@ -162,10 +163,10 @@ int main() {
       uint32_t result = 0;
       for (size_t k = 0; k < num_ot; ++k) {
         if (ole_corr[idx]) {
-          result = result + (((1 << k) * (uint32_t)ole_int[idx]) ^
+          result = result + (((uint32_t)ole_int[idx]<<k) ^
                              (uint32_t)ole_enc[idx]);
         } else {
-          result = result + ((1 << k) * (uint32_t)ole_int[idx]);
+          result = result + ((uint32_t)ole_int[idx]<<k);
         }
         ++idx;
       }
@@ -466,7 +467,8 @@ int main() {
   std::array<uint16_t, N> ole_in;
   s_prime.get_int_from_subsetsum(ole_in.data());
   std::array<uint16_t, N> blinder;
-  std::array<uint16_t, 1152> ole_enc;
+  // use uint32_t to avoid overflows
+  std::array<uint32_t, 1152> ole_enc;
   BitVector ole_corr(1152);
 
   auto oleSpan =
@@ -481,18 +483,20 @@ int main() {
   for (size_t j = 0; j < N; ++j) {
     uint64_t blinding_factor = 0;
     for (size_t k = 0; k < num_ot; k++) {
+      // check if correction bit was set
       if (ole_corr[j * num_ot + k]) {
-        blinding_factor += ((1 << k) * ole_r1[j * num_ot + k]);
-        ole_enc[j * num_ot + k] =
-            ((1 << k) * (uint32_t)ole_r0[j * num_ot + k]) ^
-            ((1 << k) *
-             ((uint32_t)ole_in[j] + (uint32_t)ole_r1[j * num_ot + k]));
+        // update blinding factor with r1 << k
+        blinding_factor += (ole_r1[j * num_ot + k]<<k);
+        // encrypt OLE result with ole_r1 and XOR it with r0 
+         ole_enc[j * num_ot + k] =
+            ((uint32_t)ole_r0[j * num_ot + k]<<k) ^
+            (((uint32_t)ole_in[j] + (uint32_t)ole_r1[j * num_ot + k])<<k);
       } else {
-        blinding_factor += ((1 << k) * ole_r0[j * num_ot + k]);
+        // update blinding factor with r1 << k
+        blinding_factor += (ole_r0[j * num_ot + k]<<k);
         ole_enc[j * num_ot + k] =
-            ((1 << k) * (uint32_t)ole_r1[j * num_ot + k]) ^
-            ((1 << k) *
-             ((uint32_t)ole_in[j] + (uint32_t)ole_r0[j * num_ot + k]));
+            ((uint32_t)ole_r1[j * num_ot + k]<<k) ^
+            (((uint32_t)ole_in[j] + (uint32_t)ole_r0[j * num_ot + k])<<k);
       }
     }
     blinder[j] = (blinding_factor + SPRING_Q) % SPRING_Q;
