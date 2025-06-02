@@ -20,7 +20,6 @@ using namespace LEAP;
 int main() {
   const uint64_t N = 128;
   const size_t numBaseOTs = 128;
-  const size_t num_ot = LOG_Q;
   std::string ip = "127.0.0.1:12112";
 
   auto recverThread = std::thread([&]() {
@@ -161,7 +160,7 @@ int main() {
     idx = 0;
     for (uint16_t &j : y) {
       uint32_t result = 0;
-      for (size_t k = 0; k < num_ot; ++k) {
+      for (size_t k = 0; k < LOG_Q; ++k) {
         if (ole_corr[idx]) {
           result = result + (((uint32_t)ole_int[idx]<<k) ^
                              (uint32_t)ole_enc[idx]);
@@ -170,7 +169,7 @@ int main() {
         }
         ++idx;
       }
-      j = (result + SPRING_Q) % SPRING_Q;
+      j = result % SPRING_Q;
     }
 
     auto ole_end = client_socket.bytesSent();
@@ -482,24 +481,24 @@ int main() {
 #endif
   for (size_t j = 0; j < N; ++j) {
     uint64_t blinding_factor = 0;
-    for (size_t k = 0; k < num_ot; k++) {
+    for (size_t k = 0; k < LOG_Q; k++) {
       // check if correction bit was set
-      if (ole_corr[j * num_ot + k]) {
+      if (ole_corr[j * LOG_Q + k]) {
         // update blinding factor with r1 << k
-        blinding_factor += (ole_r1[j * num_ot + k]<<k);
+        blinding_factor += (ole_r1[j * LOG_Q + k]<<k);
         // encrypt OLE result with ole_r1 and XOR it with r0 
-         ole_enc[j * num_ot + k] =
-            ((uint32_t)ole_r0[j * num_ot + k]<<k) ^
-            (((uint32_t)ole_in[j] + (uint32_t)ole_r1[j * num_ot + k])<<k);
+         ole_enc[j * LOG_Q + k] =
+            ((uint32_t)ole_r0[j * LOG_Q + k]<<k) ^
+            (((uint32_t)ole_in[j] + (uint32_t)ole_r1[j * LOG_Q + k])<<k);
       } else {
         // update blinding factor with r1 << k
-        blinding_factor += (ole_r0[j * num_ot + k]<<k);
-        ole_enc[j * num_ot + k] =
-            ((uint32_t)ole_r1[j * num_ot + k]<<k) ^
-            (((uint32_t)ole_in[j] + (uint32_t)ole_r0[j * num_ot + k])<<k);
+        blinding_factor += (ole_r0[j * LOG_Q + k]<<k);
+        ole_enc[j * LOG_Q + k] =
+            ((uint32_t)ole_r1[j * LOG_Q + k]<<k) ^
+            (((uint32_t)ole_in[j] + (uint32_t)ole_r0[j * LOG_Q + k])<<k);
       }
     }
-    blinder[j] = (blinding_factor + SPRING_Q) % SPRING_Q;
+    blinder[j] = blinding_factor % SPRING_Q;
   }
 #ifdef LEAP_MICRO_BENCHMARKS
   auto server_ole_wait_two = time.setTimePoint("ole-wait-2");
@@ -564,14 +563,14 @@ int main() {
       for (size_t l = 0; l < LOG_Q; ++l) {
         if (rounding_corr[j * LOG_Q + l]) {
           // correction bit set, switch how encryption works
-          if ((k >> (num_ot - l - 1)) & 1) {
+          if ((k >> (LOG_Q - l - 1)) & 1) {
             bit ^= ((r0 >> l) & 1);
           } else {
             bit ^= ((r1 >> l) & 1);
           }
         } else {
           // correct bit was already requested
-          if ((k >> (num_ot - l - 1)) & 1) {
+          if ((k >> (LOG_Q - l - 1)) & 1) {
             bit ^= ((r1 >> l) & 1);
           } else {
             bit ^= ((r0 >> l) & 1);
@@ -605,13 +604,13 @@ int main() {
       for (size_t l = 0; l < LOG_Q; ++l) {
         if (rounding_corr[j * LOG_Q + l]) {
           // switch
-          if ((k >> (num_ot - l - 1)) & 1) {
+          if ((k >> (LOG_Q - l - 1)) & 1) {
             bit ^= ((r0 >> l) & 1);
           } else {
             bit ^= ((r1 >> l) & 1);
           }
         } else {
-          if ((k >> (num_ot - l - 1)) & 1) {
+          if ((k >> (LOG_Q - l - 1)) & 1) {
             bit ^= ((r1 >> l) & 1);
           } else {
             bit ^= ((r0 >> l) & 1);
