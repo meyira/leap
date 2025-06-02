@@ -557,25 +557,20 @@ int main() {
         bit ^= 1;
       }
       // encrypt result bit with OT taking corrections into account
-      uint8_t kee = 0;
       for (size_t l = 0; l < LOG_Q; ++l) {
         if (rounding_corr[j * LOG_Q + l]) {
           // correction bit set, switch how encryption works
           if ((k >> (num_ot - l - 1)) & 1) {
             bit ^= ((r0 >> l) & 1);
-            kee ^= ((r0 >> l) & 1);
           } else {
             bit ^= ((r1 >> l) & 1);
-            kee ^= ((r1 >> l) & 1);
           }
         } else {
           // correct bit was already requested
           if ((k >> (num_ot - l - 1)) & 1) {
             bit ^= ((r1 >> l) & 1);
-            kee ^= ((r1 >> l) & 1);
           } else {
             bit ^= ((r0 >> l) & 1);
-            kee ^= ((r0 >> l) & 1);
           }
         }
       }
@@ -592,7 +587,6 @@ int main() {
         r1 |= (extract[0] & 1) << l;
       }
       uint8_t bit = 0;
-      uint8_t kee = 0;
       // compute assumed rounding value
       int32_t to_round = (int32_t)(k - (int32_t)blinder[j]);
       while (to_round < 0) {
@@ -609,18 +603,14 @@ int main() {
           // switch
           if ((k >> (num_ot - l - 1)) & 1) {
             bit ^= ((r0 >> l) & 1);
-            kee ^= ((r0 >> l) & 1);
           } else {
             bit ^= ((r1 >> l) & 1);
-            kee ^= ((r1 >> l) & 1);
           }
         } else {
           if ((k >> (num_ot - l - 1)) & 1) {
             bit ^= ((r1 >> l) & 1);
-            kee ^= ((r1 >> l) & 1);
           } else {
             bit ^= ((r0 >> l) & 1);
-            kee ^= ((r0 >> l) & 1);
           }
         }
       }
@@ -707,7 +697,7 @@ int main() {
 
   std::this_thread::sleep_for(std::chrono::milliseconds(10));
   std::cout << "[Server] overall " << overall << " ms, PRF " << prf_t
-            << "ms, baseOT " << b_t << " ms, Subset - Sum " << sub_all_t
+            << " ms, baseOT " << b_t << " ms, Subset - Sum " << sub_all_t
             << " us, OLE " << ole_all_t << " us, NTT " << ntt_t
             << " us, rounding " << rounding_all_t << " us, BCH " << bch_t
             << " us" << std::endl;
