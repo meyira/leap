@@ -556,7 +556,7 @@ int main() {
       while (to_round >= SPRING_Q) {
         to_round -= SPRING_Q;
       }
-      if ((to_round > 63) && (to_round < 192)) {
+      if ((to_round > 63) && (to_round < 193)) {
         bit ^= 1;
       }
       // encrypt result bit with OT taking corrections into account
@@ -598,7 +598,7 @@ int main() {
       while (to_round >= SPRING_Q) {
         to_round -= SPRING_Q;
       }
-      if ((to_round > 63) && (to_round < 192))
+      if ((to_round > 63) && (to_round < 193))
         // round up if centered
         bit ^= 1;
       for (size_t l = 0; l < LOG_Q; ++l) {
