@@ -289,7 +289,7 @@ void SpringNRPSIServer::Online() {
         while (to_round >= 257) {
           to_round -= 257;
         }
-        if ((to_round > 63) && (to_round < 129)) {
+        if ((to_round > 63) && (to_round < 192)) {
           bit ^= 1;
         }
         // encrypt result
@@ -322,7 +322,7 @@ void SpringNRPSIServer::Online() {
         while (to_round >= 257) {
           to_round -= 257;
         }
-        if ((to_round > 63) && (to_round < 129))
+        if ((to_round > 63) && (to_round < 192))
           bit ^= 1;
         for (size_t l = 0; l < 9; ++l) {
           if (round_corr[i * N * 9 + j * 9 + l]) {

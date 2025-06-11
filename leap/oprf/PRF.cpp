@@ -31,13 +31,13 @@ uint64_t prf(const osuCrypto::block &input,
 
   uint64_t biased[2] = {0};
   for (uint64_t k = 0; k < N / 2; ++k) {
-    if ((out[k] > 63) && (out[k] < 129)) {
+    if ((out[k] > 63) && (out[k] < 192)) {
       // 1
       biased[0] ^= ((uint64_t)1 << k);
     }
   }
   for (size_t k = N / 2; k < N; ++k) {
-    if (out[k] > 63 && out[k] < 129) {
+    if (out[k] > 63 && out[k] < 192) {
       // 1
       biased[1] ^= ((uint64_t)1 << (k - (N / 2)));
     }
